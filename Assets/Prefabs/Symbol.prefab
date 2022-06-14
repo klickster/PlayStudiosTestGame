@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7800479313321891586}
   - component: {fileID: 3202540792994029438}
+  - component: {fileID: 5555419048038486973}
   - component: {fileID: 4847536486260709933}
   m_Layer: 5
   m_Name: Symbol
@@ -45,6 +46,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4105036141259849730}
   m_CullTransparentMesh: 1
+--- !u!114 &5555419048038486973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4105036141259849730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50cf8516a16b5ae45962a8413f285288, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winAnimationDuration: 0.5
+  winAnimationLoops: 3
+  winAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  startAnimationColor: {r: 1, g: 1, b: 1, a: 1}
+  endAnimationColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &4847536486260709933
 MonoBehaviour:
   m_ObjectHideFlags: 0

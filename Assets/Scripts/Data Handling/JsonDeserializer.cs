@@ -3,11 +3,6 @@ using Newtonsoft.Json;
 
 public class JsonDeserializer <T>
 {
-    public void SerializeJson(T objectToSerialize)
-    {
-
-    }
-
     public T DeserializeJson(string jsonPath)
     {
         if (System.IO.File.Exists(jsonPath))
