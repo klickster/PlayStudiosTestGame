@@ -27,10 +27,7 @@ namespace PlayStudios.ViewManagement
         {
             CacheSymbolSprites(symbolCollection.SymbolsData);
             spinButton.onClick.AddListener(OnSpinButton);
-        }
 
-        private void Start()
-        {
             slotsGamePresenter = new SlotsGamePresenter(this, new CoroutineProxy(this));
             SetInitialReels(slotsGamePresenter.GetReelAmount(), slotsGamePresenter.GetSymbolsPerReel());
             ResetView();
