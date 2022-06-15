@@ -22,6 +22,7 @@ namespace PlayStudios.GameManagement
         private const string SPINS_PATH = "/StreamingAssets/spins.json";
         private const string GAME_SETTINGS_PATH = "GameSettings";
 
+        #region PUBLIC_METHODS
         public SlotsGamePresenter(SlotsGameViewController slotsGameView, CoroutineProxy coroutineProxy)
         {
             this.slotsGameView = slotsGameView;
@@ -30,6 +31,33 @@ namespace PlayStudios.GameManagement
             Init();
         }
 
+        public int GetReelAmount()
+        {
+            return ReelDataManager.ReelAmount;
+        }
+
+        public int GetSymbolsPerReel()
+        {
+            return gameSettings.SymbolsPerReel;
+        }
+
+        public SymbolName GetSymbolAtCurrentIndex(int reelIndex)
+        {
+            return ReelDataManager.GetSymbolAtCurrentIndex(reelIndex);
+        }
+
+        public SymbolName GetSymbolAtIndex(int reelIndex, int symbolIndex)
+        {
+            return ReelDataManager.GetSymbolAtIndex(reelIndex, symbolIndex);
+        }
+
+        public SpinDataHolder GetRandomSpin()
+        {
+            return spinsData.Spins[Random.Range(0, spinsData.Spins.Length)];
+        }
+        #endregion
+
+        #region PRIVATE_METHODS
         private void Init()
         {
             //Load required assets
@@ -115,30 +143,7 @@ namespace PlayStudios.GameManagement
 
             ReelDataManager.GetReel(currentReelIndex).OnUpdateIndex += CheckToStopCurrentReel;
         }
+        #endregion
 
-        public int GetReelAmount()
-        {
-            return ReelDataManager.ReelAmount;
-        }
-
-        public int GetSymbolsPerReel()
-        {
-            return gameSettings.SymbolsPerReel;
-        }
-
-        public SymbolName GetSymbolAtCurrentIndex(int reelIndex)
-        {
-            return ReelDataManager.GetSymbolAtCurrentIndex(reelIndex);
-        }
-
-        public SymbolName GetSymbolAtIndex(int reelIndex, int symbolIndex)
-        {
-            return ReelDataManager.GetSymbolAtIndex(reelIndex, symbolIndex);
-        }
-
-        public SpinDataHolder GetRandomSpin()
-        {
-            return spinsData.Spins[Random.Range(0, spinsData.Spins.Length)];
-        }
     }
 }

@@ -20,6 +20,7 @@ namespace PlayStudios.ViewManagement
 
         public Sprite GetSprite() => reelSymbolImage.sprite;
 
+        #region UNITY_METHODS
         private void Awake()
         {
             reelSymbolImage = GetComponent<Image>();
@@ -35,7 +36,9 @@ namespace PlayStudios.ViewManagement
             var t = currentTime / winAnimationDuration;
             reelSymbolImage.color = Color.Lerp(startAnimationColor, endAnimationColor, winAnimationCurve.Evaluate(Mathf.PingPong(t, 1)));
         }
+        #endregion
 
+        #region PUBLIC_METHODS
         public void SetSymbolSprite(Sprite symbolSprite)
         {
             reelSymbolImage.sprite = symbolSprite;
@@ -67,5 +70,6 @@ namespace PlayStudios.ViewManagement
             doingWinAnimation = false;
             reelSymbolImage.color = startAnimationColor;
         }
+        #endregion
     }
 }

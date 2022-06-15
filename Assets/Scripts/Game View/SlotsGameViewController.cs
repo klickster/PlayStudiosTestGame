@@ -23,6 +23,7 @@ namespace PlayStudios.ViewManagement
         public event Action OnSpinCommand;
         public event Action<int> OnUpdateReelIndex;
 
+        #region UNITY_METHODS
         private void Awake()
         {
             CacheSymbolSprites(symbolCollection.SymbolsData);
@@ -32,7 +33,9 @@ namespace PlayStudios.ViewManagement
             SetInitialReels(slotsGamePresenter.GetReelAmount(), slotsGamePresenter.GetSymbolsPerReel());
             ResetView();
         }
+        #endregion
 
+        #region PUBLIC_METHODS
         public void SetInitialReels(int reelAmount, int symbolsPerReel)
         {
             for (int i = 0; i < reelAmount; i++)
@@ -95,7 +98,9 @@ namespace PlayStudios.ViewManagement
                 reels[i].StopWinAnimation();
             }
         }
+        #endregion
 
+        #region PRIVATE_METHODS
         /// <summary>
         /// Disables the interaction of the spin button and calls for the spin command 
         /// </summary>
@@ -140,5 +145,6 @@ namespace PlayStudios.ViewManagement
                 symbolSprites.Add(symbolsData[i].SymbolName, symbolsData[i].SymbolSprite);
             }
         }
+        #endregion
     }
 }

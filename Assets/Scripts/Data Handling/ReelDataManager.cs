@@ -13,6 +13,8 @@ namespace PlayStudios.DataManagement
 
         public static int ReelAmount => reels.Count;
 
+        #region PRIVATE_METHODS
+        //Loads initial reel data before the game scene loads
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Init()
         {
@@ -31,7 +33,9 @@ namespace PlayStudios.DataManagement
                 reels.Add(new Reel(reelStripsData.reelStrips[i]));
             }
         }
+        #endregion
 
+        #region PUBLIC_METHODS
         public static void DecreaseReelSymbolIndex(int reelIndex)
         {
             if (reelIndex >= reels.Count || reelIndex < 0)
@@ -86,5 +90,6 @@ namespace PlayStudios.DataManagement
 
             return reels[reelIndex].ReelNames[symbolIndex];
         }
+        #endregion
     }
 }

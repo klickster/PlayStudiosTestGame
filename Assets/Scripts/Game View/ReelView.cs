@@ -22,13 +22,80 @@ namespace PlayStudios.ViewManagement
 
         public event Action<SymbolImage, ReelView> OnSymbolReachBottom;
 
+        #region UNITY_METHODS
         private void Update()
         {
             if (!spinning) return;
 
             Spin();
         }
+        #endregion
 
+        #region PUBLIC_METHODS
+        public void InitReel(int symbolAmount, SlotsGameViewController viewController)
+        {
+            //Instantiates and sets starting symbol sprites
+            for (int i = 0; i < symbolAmount; i++)
+            {
+                var symbolImage = Instantiate(symbolImagePrefab, symbolsLayoutGroup.transform);
+                symbolImage.SetSymbolSprite(viewController.GetSymbolSprite(i, this));
+                symbolImages.Add(symbolImage);
+            }
+
+            SetLayoutHeight();
+        }
+
+        public void StartSpinning(float movingSpeed)
+        {
+            //Calculate symbol positions
+            if (!calculatedPositions)
+            {
+                CalculateResetAndStartingPositions();
+            }
+
+            spinning = true;
+            this.spinningSpeed = movingSpeed;
+        }
+
+        public void StopSpinning()
+        {
+            spinning = false;
+        }
+
+        public void ResetSymbolImage(SymbolImage symbolImage, Sprite newSprite)
+        {
+            symbolImage.ResetAnchoredPosition(symbolStartingPosition);
+            symbolImage.SetSymbolSprite(newSprite);
+        }
+
+        public void DoWinAnimation()
+        {
+            var closestSymbolImageToZero = symbolImages[0];
+
+            //Gets the symbol closest to the center of the screen, which would end up being the one in the middle
+            for (int i = 1; i < symbolImages.Count; i++)
+            {
+                if (Mathf.Abs(symbolImages[i].transform.localPosition.y) < Mathf.Abs(closestSymbolImageToZero.transform.localPosition.y))
+                {
+                    closestSymbolImageToZero = symbolImages[i];
+                }
+            }
+            middleSymbol = closestSymbolImageToZero;
+            //Animates the middle symbol
+            middleSymbol.StartWinAnimation();
+        }
+
+        public void StopWinAnimation()
+        {
+            if (middleSymbol != null)
+            {
+                middleSymbol.StopWinAnimation();
+                middleSymbol = null;
+            }
+        }
+        #endregion
+
+        #region PRIVATE_METHODS
         /// <summary>
         /// Calculates the starting and resetting positions for the symbols
         /// </summary>
@@ -39,11 +106,6 @@ namespace PlayStudios.ViewManagement
             symbolStartingPosition = symbolImages[0].GetYPosition();
             //Position of the bottom-most symbol, adding its height and the spacing
             symbolResetPosition = Mathf.Abs(symbolImages[symbolImages.Count - 1].GetYPosition()) + symbolImages[0].GetSprite().rect.height + symbolsLayoutGroup.spacing;
-        }
-
-        private void Stop()
-        {
-            spinning = false;
         }
 
         private void Spin()
@@ -70,67 +132,6 @@ namespace PlayStudios.ViewManagement
             layoutHeight = symbolImages.Count * symbolImages[0].GetSprite().rect.height + symbolsLayoutGroup.spacing * (symbolImages.Count - 1);
             layoutGroupRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, layoutHeight);
         }
-
-        public void InitReel(int symbolAmount, SlotsGameViewController viewController)
-        {
-            //Instantiates and sets starting symbol sprites
-            for (int i = 0; i < symbolAmount; i++)
-            {
-                var symbolImage = Instantiate(symbolImagePrefab, symbolsLayoutGroup.transform);
-                symbolImage.SetSymbolSprite(viewController.GetSymbolSprite(i, this));
-                symbolImages.Add(symbolImage);
-            }
-
-            SetLayoutHeight();
-        }
-
-        public void StartSpinning(float movingSpeed)
-        {
-            //Calculate symbol positions
-            if (!calculatedPositions)
-            {
-                CalculateResetAndStartingPositions();  
-            }
-
-            spinning = true;
-            this.spinningSpeed = movingSpeed;
-        }
-
-        public void StopSpinning()
-        {
-            Stop();
-        }
-
-        public void ResetSymbolImage(SymbolImage symbolImage, Sprite newSprite)
-        {
-            symbolImage.ResetAnchoredPosition(symbolStartingPosition);
-            symbolImage.SetSymbolSprite(newSprite);
-        }
-
-        public void DoWinAnimation()
-        {
-            var closestSymbolImageToZero = symbolImages[0];
-
-            //Gets the symbol closest to the center of the screen, which would end up being the one in the middle
-            for (int i = 1; i < symbolImages.Count; i++)
-            {
-                if(Mathf.Abs(symbolImages[i].transform.localPosition.y) < Mathf.Abs(closestSymbolImageToZero.transform.localPosition.y))
-                {
-                    closestSymbolImageToZero = symbolImages[i];
-                }
-            }
-            middleSymbol = closestSymbolImageToZero;
-            //Animates the middle symbol
-            middleSymbol.StartWinAnimation();
-        }
-
-        public void StopWinAnimation()
-        {
-            if (middleSymbol != null)
-            {
-                middleSymbol.StopWinAnimation();
-                middleSymbol = null;
-            }
-        }
+        #endregion
     }
 }
